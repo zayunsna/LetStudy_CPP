@@ -1,2 +1,2 @@
 # LetStudy_CPP
-Let's study C++ and logging for the future!
+Let's study C++ and make a log for the future!
