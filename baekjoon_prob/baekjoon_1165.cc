@@ -28,6 +28,7 @@ void solve(int start, int x, int y, string s){
 			if(this_t == s[start+1]){
 				//cout << i << "  " << j << " || "<< this_t << "  " << start+1 << "  " << x+p1[i] << " : " << y+p2[j] << "  " << ret << "\n";
 				solve(start+1, newx, newy, s);
+				//mat[newx][newy] = '#';
 			}
 			ret.pop_back();
 		}
@@ -49,6 +50,22 @@ void baekjoon_1165(){
 		}
 	}
 
+	ifstream in("dict.txt");
+	
+	while(getline(in, str)){
+		if( all.find(str[0]) == string::npos) continue;
+
+		for(int x = 0; x < 7; ++x ){
+			for(int y = 0; y < 7; ++y){
+				if(mat[x][y] == str[0])
+					solve(0,x,y,str);
+			}
+		}
+	}
+
+	cout << cnt << endl;
+	
+}
 	/*
 	cout << all << endl;
 	for(int x = 1; x < 6; ++x ){
@@ -73,19 +90,3 @@ void baekjoon_1165(){
 		}
 	}
 	*/
-	ifstream in("dict.txt");
-	
-	while(getline(in, str)){
-		if( all.find(str[0]) == string::npos) continue;
-
-		for(int x = 0; x < 7; ++x ){
-			for(int y = 0; y < 7; ++y){
-				if(mat[x][y] == str[0])
-					solve(0,x,y,str);
-			}
-		}
-	}
-
-	cout << cnt << endl;
-	
-}
