@@ -1,5 +1,6 @@
 #include "/home/icegpu/HK/HKTool.h"
 #include <bits/stdc++.h>
+#include <ios>
 using namespace std;
 
 int n = 10;
@@ -40,33 +41,39 @@ void draw(int y, int x, int gap, int value){
 void dfs(int y, int x, int cnt){
 	if( cnt >= ret ) return;
 	if( x == n){
+		//cout << " x == n " << "\n";
 		dfs(y+1, 0, cnt);
 		return;
 	}
 	if( y == n ){
 		ret = min(ret, cnt);
+		//cout << " End line!  y == n " << y << " ; " << x << "  " << cnt << "\n";
 		return;
 	}
 	if(mat[y][x] == 0){
+		//cout << " contant is 0 || " << y << " : " << x << "\n";
 		dfs(y, x+1, cnt);
 		return;
 	}
+	//cout << " content is 1 || " << y << " : " << x << "\n";
 	for(int gap = 5; gap >= 1; --gap){
+		//cout << " size selection : " << gap << "  " << mp[gap] << "\n";
 		if(mp[gap] == 5) continue;
 		if( check(y, x, gap)){
+			//cout << " size : " << gap << " is okay for this .\n";
 			mp[gap]++;
+			//cout << " Draw section \n";
 			draw(y, x, gap, 0);
+			//cout << cnt+1 << "th Search continue \n";
 			dfs(y, x+gap, cnt+1);
+			//cout << cnt+1 << "th Remove drawing \n";
 			draw(y, x, gap, 1);
+			//cout << " Fill off the paper \n";
 			mp[gap]--;
 		}
 	}
 	return;
 }
-
-
-
-
 
 void baekjoon_17136(){
 

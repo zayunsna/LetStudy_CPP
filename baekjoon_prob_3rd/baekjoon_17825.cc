@@ -22,6 +22,7 @@ int move(int n, int cnt){
 		while(q.size()){
 			int x = q.front(); q.pop();
 			next = adj[x][0];
+			//cout << " ---------"<< cnt <<"- " << x << " -> " << next << "\n";
 			q.push(next);
 			if(next == 99) break;
 			cnt--;
@@ -46,12 +47,25 @@ bool checkUser(int pos, int id){
 int run(int turn){
 	if(turn == n) return 0;
 	int ret = 0 ;
+	//cout << " Turn : " << turn << ", Dice # is :" << lt[turn] << "\n";
 	for(int i = 0; i < 4; ++i){
+		//cout << " Current User ID : " << i << "\n";
 		int temp_pos = user[i];
+		//cout << " Current Position : " << temp_pos << "\n";
 		int now_pos = move(temp_pos, lt[turn]);
-		if( checkUser(now_pos, i)) continue;
+		//cout << "   will move here : " << now_pos << "\n";
+		if( checkUser(now_pos, i)) {
+			//cout << " @@ This slot have already other Users \n";
+			continue;
+		}
+		//cout << " Set User [" << i << "] position at " << now_pos << ", and make a point : " <<mat[now_pos] << "\n";
 		user[i] = now_pos;
-		ret = max(ret, run(turn+1) + mat[now_pos]);
+		//cout << " Current total score is : " << ret + mat[now_pos] << "\n";
+		//cout << " Run next turn! \n";
+		int next_run = run(turn+1) + mat[now_pos];
+		//cout << " Comparing with next run : " << ret << " : " << next_run << "\n";
+		ret = max(ret, next_run);
+		//cout << " Go back for new combination at " << turn << "with socre " << ret <<"\n";
 		user[i] = temp_pos;
 	}
 
