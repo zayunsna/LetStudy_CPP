@@ -50,7 +50,9 @@ void baekjoon_1260(){
 		v[b].push_back(a);
 	}
 
-	for(int i =0 ; i< n; ++i) sort(v[i].begin(), v[i].end());
+	for(int i =0 ; i< 1004; ++i){
+		sort(v[i].begin(), v[i].end());
+	}
 	v_dfs.push_back(s);
 	dfs(s);
 	for(int i = 0; i < v_dfs.size(); ++i) cout << v_dfs[i] << " ";
