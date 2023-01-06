@@ -1,4 +1,3 @@
-#include "/home/icegpu/HK/HKTool.h"
 #include <bits/stdc++.h>
 using namespace std;
 int n, L, H;
@@ -88,13 +87,13 @@ void run(){
 		if(visCheck()){break;}
 		else{
 			ret++;
-			cout << " vis map init! \n";
+			//cout << " vis map init! \n";
 			fill(&vis[0][0], &vis[0][0]+54*54, 0);
 		}
 	}
 }
 
-void baekjoon_16234(){
+int main(){
 
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL); cout.tie(NULL);
