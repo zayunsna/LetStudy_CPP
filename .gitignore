@@ -8,3 +8,5 @@
 
 # no excutable file
 *.exe
+
+*.cpp
