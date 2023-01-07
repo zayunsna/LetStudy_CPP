@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef vector<pair<int,int>> vp
+typedef vector<pair<int,int>> vp;
 int n, m;
 
 int main(){
