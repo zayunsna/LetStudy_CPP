@@ -10,12 +10,10 @@ string s;
 void go(int here){
 	cout << " now here " << here << "\n";
 	\
-	for(int i = 0; i < n; ++i) {
-		for(int j = 0; j < n; ++j){
-			cout << a[i*n+j] << " ";
-		}
-		cout << "\n";
+	for(int i = 0; i < n*n; ++i) {
+		cout << a[i] << " ";
 	}
+	cout << "\n";
 	if(here == n + 1){
 		cout << " final array in \n";
 		int sum = 0; 
@@ -53,12 +51,11 @@ int main(){
 			value *= 2;
 		}
 	} 
-	for(int i = 0; i < n; ++i) {
-		for(int j = 0; j < n; ++j){
-			cout << a[i*n+j] << " ";
-		}
-		cout << "\n";
+	for(int i = 0; i < n*n; ++i) {
+		cout << a[i] << " ";
 	}
+	cout << "\n";
+
 	go(1);
 	cout << ret << "\n";
     return 0;
