@@ -10,3 +10,5 @@
 *.exe
 
 *.cpp
+
+./SW_EA_prob/*
