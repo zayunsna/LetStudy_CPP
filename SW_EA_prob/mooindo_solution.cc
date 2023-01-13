@@ -15,36 +15,36 @@ void swap(int &i1, int &i2) {
  
 int getLength(int now, int mode, int row, int col, int visit) {
     int &ret = cache[now][visit][mode];
-	cout << "\n";
-	cout << now << "  " << mode << "  " << row << "  " << col << "  " << bitset<3>(visit) << " = " << cache[now][visit][mode] << "\n";
+	//cout << "\n";
+	//cout << now << "  " << mode << "  " << row << "  " << col << "  " << bitset<3>(visit) << " = " << cache[now][visit][mode] << "\n";
     if (ret) return ret;
     
     for (int i = 1; i <= n; i++) {
         if (visit & (1 << (i-1))) {
-			cout << i << " continued. \n";
+			//cout << i << " continued. \n";
 			continue;
 		}
-		cout << " in For loop " << i << " ";
+		//cout << " in For loop " << i << " ";
         int nv = visit | (1 << (i-1));
-		cout << bitset<3>(nv) << " =  " << bitset<3>(visit) << " | " << bitset<3>(1<<(i-1)) << "\n";
+		//cout << bitset<3>(nv) << " =  " << bitset<3>(visit) << " | " << bitset<3>(1<<(i-1)) << "\n";
         if (row >= infos[i][0] && col >= infos[i][1]) {
-			cout << now << "/" << i << " => 1 " << row << " >= " << infos[i][0] << " && " << col << " >= " << infos[i][1] << "\n"; 
+			//cout << now << "/" << i << " => 1 " << row << " >= " << infos[i][0] << " && " << col << " >= " << infos[i][1] << "\n"; 
             ret = max(ret, infos[i][2] + getLength(i, 0, infos[i][0], infos[i][1], nv));
-			cout << now << "/" << i << " => 1 " << ret  << " MAX \n";
+			//cout << now << "/" << i << " => 1 " << ret  << " MAX \n";
         }
         if (row >= infos[i][0] && col >= infos[i][2]) {
-			cout << now << "/" << i << " => 2 " << row << " >= " << infos[i][0] << " && " << col << " >= " << infos[i][2] << "\n"; 
+			//cout << now << "/" << i << " => 2 " << row << " >= " << infos[i][0] << " && " << col << " >= " << infos[i][2] << "\n"; 
             ret = max(ret, infos[i][1] + getLength(i, 1, infos[i][0], infos[i][2], nv));
-			cout << now << "/" << i << " => 2 " << ret  << " MAX \n";
+			//cout << now << "/" << i << " => 2 " << ret  << " MAX \n";
         }
  
         if (row >= infos[i][1] && col >= infos[i][2]) {
-			cout << now << "/" << i << " => 3 " << row << " >= " << infos[i][1] << " && " << col << " >= " << infos[i][2] << "\n"; 
+			//cout << now << "/" << i << " => 3 " << row << " >= " << infos[i][1] << " && " << col << " >= " << infos[i][2] << "\n"; 
             ret = max(ret, infos[i][0] + getLength(i, 2, infos[i][1], infos[i][2], nv));
-			cout << now << "/" << i << " => 3 " << ret  << " MAX \n";
+			//cout << now << "/" << i << " => 3 " << ret  << " MAX \n";
         }
     }
-	cout << " End for loop : " << ret << "\n";
+	//cout << " End for loop : " << ret << "\n";
     return ret;
 }
  
