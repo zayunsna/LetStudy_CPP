@@ -4,6 +4,8 @@ using namespace std;
 const int N = 200004;
 long long lt[N];
 int vis[N];
+int save[N];
+int ret;
 int n,m;
 
 void bfs(int j){
@@ -11,20 +13,19 @@ void bfs(int j){
 	queue<int> q;
 	q.push(j);
 	vis[j] = 1;
-	lt[j] = 1;
 	while(q.size()){
 		int _num = q.front(); q.pop();
+		if( _num == m){
+			ret = vis[m];
+			break;
+		}
 		for(int next : {_num+1, _num-1, _num*2}){
-			if(0 <= next && next <= N){
-				if(!vis[next]){
-					q.push(next);
-					vis[next] = vis[_num] + 1;
-					lt[next] += lt[_num];
-				}
-				else if(vis[next] == vis[_num]+1){
-					lt[next] += lt[_num];
-				}
-			}
+			if(next >= N || next < 0 || vis[next]) continue;
+			
+			vis[next] = vis[_num] + 1;
+			save[next] = _num;
+			q.push(next);
+			
 		}
 	}
 	return;
@@ -42,8 +43,16 @@ int main(){
 		return 0;
 	}
 	bfs(n);
-	cout << vis[m]-1 << "\n";
-	cout << lt[m] <<  "\n";
+	vector<int> v;
+	for(int i = m ; i != n; i = save[i]){
+		v.push_back(i);
+	}
+	v.push_back(n);
+	reverse(v.begin(), v.end());
+	cout << ret -1 << "\n";
+	for(auto it : v) cout << it << " ";
+	cout << "\n";
+
 
 	return 0;
 }
