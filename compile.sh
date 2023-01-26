@@ -2,4 +2,4 @@
 
 NAME=$1
 
-gcc -framework Security -std=c++14 -Wall $NAME -o solve.out
+gcc $NAME -o solve -lstdc++ -std=c++14 
