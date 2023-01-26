@@ -11,4 +11,6 @@
 
 *.cpp
 
+*.json
+
 ./SW_EA_prob/*

@@ -5,7 +5,6 @@
 
 using namespace std;
 
-typedef vector<pair<int,int>> vp;
 int n, m;
 const int N = 1500;
 int mat[N+4][N+4];
@@ -16,8 +15,8 @@ int dy[4] = {1, 0, -1, 0};
 int dx[4] = {0, 1, 0, -1};
 
 bool bfs(int y, int x){
-	queue<pair<int,int>> q;
-	q.push({y,x});
+	queue< pair<int,int> > q;
+	q.push( make_pair(y,x) );
 	vis[y][x] = 1;
 	int flag = 0;
 	while(q.size()){
@@ -33,7 +32,7 @@ bool bfs(int y, int x){
 			}
 			else if(mat[ny][nx] == 0){
 				vis[ny][nx] = 1;
-				q.push({ny,nx});
+				q.push( make_pair(y,x) );
 			}
 			else if(mat[ny][nx] == 9){
 				flag = 1;
