@@ -1,4 +1,3 @@
-#include "/home/icegpu/HK/HKTool.h"
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -46,7 +45,7 @@ int bfs(int start, int end){
 	return flag-1;
 }
 
-void baekjoon_1389(){
+int main(){
 
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL); cout.tie(NULL);
@@ -71,8 +70,9 @@ void baekjoon_1389(){
 
 	sort(vp.begin(), vp.end(), cmp);
 
+	for(auto it : vp) cout << it.first << "  " << it.second << "\n";
 	cout << vp[0].first << "\n";
 
-
+	return 0;
 
 }
