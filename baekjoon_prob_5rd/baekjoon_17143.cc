@@ -67,6 +67,7 @@ void move(){
 		int speed = _this.speed;
 		int dir = _this.dir;
 		int size = _this.size;
+		if(y == 101 && x == 101) continue;
 		//cout << i << "  " << y << "  " << x << "  " << speed << "  " << dir << "  " << size << "\n";
 		//if(speed == 0) continue;
 		if(dir == 1){
@@ -119,7 +120,7 @@ void move(){
 			}
 		}
 		//else continue;
-
+		cout << i << "  " << y << " : " << x << "\n";
 		if(temp[y][x]){
 			if(size > sang[temp[y][x]].size){
 				kill(temp[y][x]);
