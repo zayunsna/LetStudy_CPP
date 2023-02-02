@@ -5,86 +5,85 @@ const int N = 12;
 int mat[N+4][N+4];
 vector<int> v[N+4][N+4];
 int n, k;
-int dy[4] = {0, 0, 1, -1};
-int dx[4] = {1, -1, 0, 0};
+int dy[5] = {0, 0, 0, -1, 1};
+int dx[5] = {0, 1, -1, 0, 0};
 struct H{
 	int y; int x; int dir;
 };
 vector<H> mal;
 
-void mp(int z[N+4][N+4]){
-	for(int i = 0; i < n ;++i){
-		for(int j = 0 ; j < n; ++j){
-			cout << z[i][j] << " ";
+int changeDir(int dir){
+	if(dir == 1) return 2;
+	if(dir == 2) return 1;
+	if(dir == 3) return 4;
+	if(dir == 4) return 3;
+}
+
+void Update(int y, int x, int dir, int id){
+	int ny = y + dy[dir];
+	int nx = x + dx[dir];
+	if(ny < 0 || nx < 0 || ny >= n || nx >= n || mat[ny][nx] == 2){
+		mal[id].dir = changeDir(mal[id].dir);
+		ny = y + dy[mal[id].dir];
+		nx = x + dx[mal[id].dir];
+		if(ny < 0 || nx < 0 || ny >= n || nx >= n || mat[ny][nx] == 2) return;
+	}
+	// 현재 있는 곳의 배열 참조 복사 
+	vector<int> &vec = v[y][x];
+	// 이제 갈 곳의 배열 참조 복사 
+	vector<int> &next_vec = v[ny][nx];
+	// 현재 배열속 현재 말의 idx 찾기 
+	auto now = find(vec.begin(), vec.end(), id);
+	// 만약 갈 곳이 빨강블럭이면  현재 배열속 현재 말의 idx부터 끝까지 뒤집음.
+	// 그 말 위에 있는 말까지 한번에 가야하고 뒤집힌 상태에서 가야 하기 때문. 
+	if(mat[ny][nx] == 1) reverse(now, vec.end());
+	// 현재 배열의 현재말 idx부터 한개씩 갈 곳의 배열로 push_back; 
+	for( auto it = now; it != vec.end(); it++){
+		mal[*it].y = ny;
+		mal[*it].x = nx;
+		next_vec.push_back(*it);
+	}
+	// 현재 배열안에 이동한 말의 id를 제거. 
+	vec.erase(now, vec.end());
+	return;
+}
+
+bool check(){
+	for(int i = 0; i < n; ++i){
+		for(int j = 0; j < n; ++j){
+			if(v[i][j].size() >= 4) return true;
+		}
+	}
+	return false;
+}
+
+bool Run(){
+	for(int i = 0; i < mal.size(); ++i){
+		int y = mal[i].y;
+		int x = mal[i].x;
+		int dir = mal[i].dir;
+		
+		//cout << " ID : " << i << " " << y << " " << x << " " << dir << "\n";
+		Update(y, x, dir, i);
+		/*
+		for(int j = 0; j < n; ++j){
+			for(int k = 0; k < n; ++k){
+				
+				if(v[j][k].size()){
+					cout << "(";
+					for(auto it : v[j][k]) cout << it << " ";
+					cout << ") ";
+				}
+				else cout << 0 << " ";
+			}
+			cout << "\n";
 		}
 		cout << "\n";
+		*/
+		if(check()) return true;
 	}
-	cout << "\n";
+	return false;
 }
-
-vector<int> pickup(int id){
-	int y = mal[id].y;
-	int x = mal[id].x;
-	vector<int> out;
-	for(int k : v[y][x]) cout << k << " ";
-	cout << "\n";
-	cout << "After \n";
-	if(v[y][x].size() == 1) out.push_back(id);
-	else{
-		int idx = find(v[y][x].begin(), v[y][x].end(), id) - v[y][x].begin();
-		copy(v[y][x].begin()+idx, v[y][x].end(), out.begin());
-		v[y][x].erase(v[y][x].begin()+idx, v[y][x].end());
-	}
-	for(int k : v[y][x]) cout << k << " ";
-	cout << "\n";
-	return out;
-}
-
-void update(int id, int y, int x, int val){
-	mal[id].y = y;
-	mal[id].x = x;
-	if(val){
-		int _dir = mal[id].dir;
-		if(_dir == 1) mal[id].dir = 2;
-		else if(_dir == 2)mal[id].dir = 1;
-		else if(_dir == 3)mal[id].dir = 4;
-		else if(_dir == 4)mal[id].dir = 3;
-	}
-}
-
-int solve(){
-	int turn = 0;
-	while(true){
-		if(turn >= 1) break;
-
-		for(int i = 0; i < k; ++i){
-			cout << mal[i].y << "  " << mal[i].x << "  " << mal[i].dir << "\n";
-			int dir = mal[i].dir-1;
-			int y = mal[i].y + dy[dir];
-			int x = mal[i].x + dx[dir];
-			cout << "=> " << y << "  " << x << "  " << dir << "\n";
-			if( y < 0 || x < 0 || x >= n || y>= n || mat[y][x] == 2){
-				vector<int> _mal = pickup(i);
-				for(int id : _mal) {
-					update(id, y, x, 1);
-					v[y][x].push_back(id);
-				}
-			}
-			else{
-				vector<int> _mal = pickup(i);
-				for(int id : _mal) {
-					update(id, y, x, 0);
-					v[y][x].push_back(id);
-				}
-			}
-		}
-
-		turn++;
-	}
-
-	return (turn >= 1000) ? -1 : turn;
-}
-
 int main(){
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL); cout.tie(NULL);
@@ -95,41 +94,25 @@ int main(){
 			cin >> mat[i][j];
 		}
 	}
-	for(int i = 1; i <= k; ++i){
+	for(int i = 0; i < k; ++i){
 		int y, x, dir;
-		cin >> y >> x >> dir;
-		mal.push_back({y-1, x-1, dir});
-		v[y-1][x-1].push_back(i);
+		cin >> y >> x >> dir; 
+		y--; 
+		x--;
+		mal.push_back({y, x, dir});
+		v[y][x].push_back(i);
 	}
 
-	for(int i = 0; i < n; ++i){
-		for(int j = 0; j < n; ++j){
-			int vSize = v[i][j].size();
-			if(vSize){
-				cout << "(";
-				for(int a : v[i][j]) cout << a << ",";
-				cout << ") ";
-			}
-			else cout << 0 << " ";
+	int cnt = 0;
+	bool flag = false;
+	while( cnt <= 1000){
+		cnt++;
+		if(Run()){
+			flag = true;
+			break;
 		}
-		cout << "\n";
 	}
-
-	cout << solve() << "\n";
-
-	for(int i = 0; i < n; ++i){
-		for(int j = 0; j < n; ++j){
-			int vSize = v[i][j].size();
-			if(vSize){
-				cout << "(";
-				for(int a : v[i][j]) cout << a << ",";
-				cout << ") ";
-			}
-			else cout << 0 << " ";
-		}
-		cout << "\n";
-	}
-
-
+	if(flag) cout << cnt << "\n";
+	else cout << -1 << "\n";
 	return 0;
 }
