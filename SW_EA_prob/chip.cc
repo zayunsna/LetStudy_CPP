@@ -1,6 +1,4 @@
-#include "/home/icegpu/HK/HKTool.h"
 #include <bits/stdc++.h>
-#include <cmath>
 using namespace std;
 
 const int H = 15;
@@ -50,6 +48,7 @@ void run(int y, int x, int cnt){
 			b |= (mat[i][x] << i);
 		}
 		int &ddp = dp[b][x];
+		cout << y << ", " << x << " : " << bitset<16>(b) << "  " << ddp << "  " << cnt << "\n";
 		if( ddp >= cnt) return;
 		ddp = cnt;
 	}
@@ -71,7 +70,7 @@ void init(){
 }
 
 
-void chip(){
+int main(){
 
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL); cout.tie(NULL);
@@ -92,5 +91,6 @@ void chip(){
 		cout << "#"<< tc << " " << ret << "\n";
 	}
 
+	return 0;
 
 }

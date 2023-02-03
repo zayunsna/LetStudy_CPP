@@ -20,6 +20,7 @@ bool duCheck(int a, int b){
 }
 
 int bfs(int start, int end){
+	memset(vis, 0, sizeof(vis));
 	queue<int> q;
 	q.push(start);
 	vis[start] = 1;
