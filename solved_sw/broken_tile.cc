@@ -3,14 +3,14 @@ using namespace std;
 
 const int N = 50;
 int mat[N+4][N+4];
-
 int n, m;
 char a;
-bool ret = false;
+
+vector<pair<int,int>> vp;
 
 void Init(){
 	memset(mat, 0, sizeof(mat));
-	ret = false;
+	vp.clear();
 }
 
 bool checkTile(){
@@ -40,35 +40,19 @@ void drawVis(int y, int x, int val){
 	}
 }
 
-void mp(int z[N+4][N+4]){
-	for(int i = 0; i < n; ++i){
-		for(int j = 0; j < m ; ++j){
-			cout << z[i][j] << " ";
+bool solve(){
+	
+	for(auto it : vp){
+		int y = it.first;
+		int x = it.second;
+		if(mat[y][x] == 0) continue;
+		if(mat[y][x]){
+			if(checkOkay(y,x)) drawVis(y,x, 0);
 		}
-		cout << "\n";
 	}
-	cout << "\n";
-}
-
-void solve(int y, int x){
-	if(x >= m-1){
-		x = 0;
-		y++;
-	}
-	if( y == n-1 ){
-		ret = checkTile();
-		return;
-	}
-
-	if(ret) return;
-	if(checkOkay(y, x)){
-		drawVis(y, x, 0);
-		
-		solve(y,x+2);
-		drawVis(y,x,1);
-
-	}
-	solve(y,x+1);
+	
+	if(checkTile()) return true;
+	else return false;
 
 }
 
@@ -85,13 +69,14 @@ int main(){
 		for(int i = 0; i < n; ++i){
 			for(int j = 0 ; j < m; ++j){
 				cin >> a;
-				if( a== '#') mat[i][j] = 1;
+				if( a== '#') {
+					mat[i][j] = 1;
+					vp.push_back({i,j});
+				}
 			}
 		}
 
-		solve(0,0);
-
-		if(ret) cout << "#" << ic << " YES\n";
+		if(solve()) cout << "#" << ic << " YES\n";
 		else cout << "#" << ic  << " NO\n";
 	}
 
