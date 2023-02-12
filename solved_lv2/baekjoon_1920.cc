@@ -10,8 +10,14 @@ bool solve(int aa ,int bb, int val){
 	int mid = (aa+bb)/2;
 	int mVal = a[mid];
 	
-	if(val < mVal) return solve(aa, mid, val);
-	else return solve(mid, bb, val);
+	if(aa>bb) return false;
+	//cout << val << " = " << a[aa] << "  " << a[bb] << "  " << mVal << "\n";
+
+	if(mVal < val) return solve(mid+1, bb, val);
+	else if(mVal == val) return true;
+	else return solve(aa, mid-1, val);
+
+	return false;
 }
 
 int main(){
@@ -26,12 +32,10 @@ int main(){
 	
 	sort(a.begin(), a.end());
 	
-	
-	
 	cin >> n;
 	for(int i = 0; i < n; ++i){
 		cin >> m;
-		bool ret = solve(0, a.size(), m);
+		bool ret = solve(0, a.size()-1, m);
 		if(ret) cout << "1\n";
 		else cout << "0\n";
 	}
