@@ -17,38 +17,20 @@ int main(){
 	int idx = 0;
 	int flag = 0;
 	stack<int> stk;
-	stk.push(idx);
 	
 	string str = "";
 	
-	while(true){
-		int now = stk.top();
-		int target = v[cnt];
-		if(cnt == v.size()-1) break;
-		if(idx && !now){
-			break;
-		}
-		//cout << idx << " " << now << " " << target << "\n";
-		if(now < target){
-			//cout << "+\n";
-			str += "+";
+	for(int i = 1; i <= n; ++i){
+		stk.push(i);
+		str +="+";
+		while(stk.size() && stk.top() == v[idx]){
+			stk.pop();
+			str += "-";
 			idx++;
-			stk.push(idx);
-		}
-		else if(now == target) {
-			cnt++;
-			//cout << "-\n";
-			str += "-";
-			stk.pop();
-		}
-		else if(now > target){
-			//cout << "-\n";
-			str += "-";
-			stk.pop();
 		}
 	}
 
-	if(cnt != v.size()-1) cout << "NO\n";
+	if(stk.size()) cout << "NO\n";
 	else{
 		for(char a : str) cout << a << "\n";
 		cout << "\n";
