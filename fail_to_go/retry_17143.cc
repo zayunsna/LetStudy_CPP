@@ -9,7 +9,7 @@ struct Shark {
 
 int R, C, M;
 vector<Shark> sharks;
-int grid[100][100]; // 상어가 있는 위치를 표시하기 위한 그리드
+int grid[100][100]; // Grid for shark position
 
 // 상어 이동 방향
 int dr[5] = {0, -1, 1, 0, 0}; // 1: 위, 2: 아래, 3: 오른쪽, 4: 왼쪽

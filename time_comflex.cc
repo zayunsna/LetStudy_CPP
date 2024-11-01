@@ -1,4 +1,4 @@
-#include "/home/icegpu/HK/HKTool.h"
+#include <iostream>
 using namespace std;
 
 int N, cnt;
@@ -19,7 +19,6 @@ void time_comflex(){
 	cin >> N;
 	solve(N);
 	
-
 	cout << cnt << "\n";
 
 	// Required time consumtion (complexcity) is O(3^n) for this case. 
