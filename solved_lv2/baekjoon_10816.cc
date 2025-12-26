@@ -2,7 +2,7 @@
 using namespace std;
 
 int n, m;
-map<int,int> mp;
+unordered_map<int,int> mp;
 
 int main(){
 	ios_base::sync_with_stdio(false);
