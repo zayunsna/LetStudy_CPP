@@ -1,44 +1,44 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef long long ll;
-const int Inf = 1e9;
-int n, m;
-
-struct times{
-	int start;
-	int end;
+struct Meeting {
+    int start;
+    int end;
 };
 
-bool compare(const times& a, times& b){
-	if(a.end == b.end) return a.start < b.start;
-	return a.end < b.end;
+bool compareMeeting(const Meeting& a, const Meeting& b) {
+    if (a.end != b.end) return a.end < b.end;   
+    return a.start < b.start;                   
 }
 
-int main(){
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL); cout.tie(NULL);
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-	cin >> n;
+    int N;
+    cin >> N;
 
-	vector<times> meetings(100000);
-	for(int i = 0; i < n; ++i){
-		
-		cin >> meetings[i].start >> meetings[i].end;
-	}
+    vector<Meeting> meetings;
+    meetings.reserve(N);
 
-	sort(meetings.begin(), meetings.end(), compare);
+    for (int i = 0; i < N; i++) {
+        int s, e;
+        cin >> s >> e;
+        meetings.push_back({s, e});
+    }
 
-	int count = 0;
-	int lastEnd = 0;
+    sort(meetings.begin(), meetings.end(), compareMeeting);
 
-	for(const auto& m : meetings){
-		if(m.start >= lastEnd){
-			count++;
-			lastEnd = m.end;
-		}
-	}
-	
-	cout << count << endl;
-	return 0;
+    int count = 0;
+    int lastEnd = 0;
+
+    for (const auto& m : meetings) {
+        if (m.start >= lastEnd) {
+            count++;
+            lastEnd = m.end;
+        }
+    }
+
+    cout << count << "\n";
+    return 0;
 }
